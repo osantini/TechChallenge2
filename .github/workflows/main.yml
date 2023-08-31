@@ -13,8 +13,8 @@ jobs:
       - name: Construção imagem Docker
         uses: docker/build-push-action@v4.1.1
         with: 
-          context: ./TechChallenge2
-          file: ./TechChallenge2/Dockerfile
+          context: ./techchallenge2
+          file: ./techchallenge2/Dockerfile
           push: true
           tags: |
             techChallenge2/postech:v1
