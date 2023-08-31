@@ -17,6 +17,6 @@ jobs:
           file: ./TechChallenge2/Dockerfile
           push: true
           tags: |
-            techChallenge2/postech:v1
-            techChallenge2/postech:latest
+            techchallenge2/postech:v1
+            techchallenge2/postech:latest
     
