@@ -1,0 +1,22 @@
+name: CI-CD
+
+on: 
+  push:
+    branches: ["main"]
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3.6.0
+      - name: Construção imagem Docker
+        uses: docker/build-push-action@v4.1.1
+        with: 
+          context: ./src
+          file: ./src/Dockerfile
+          push: true
+          tags: |
+            techChallenge2/postech:v1
+            techChallenge2/postech:latest
+    
