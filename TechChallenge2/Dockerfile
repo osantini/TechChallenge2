@@ -14,10 +14,10 @@ COPY ["TechChallenge2.csproj", "TechChallenge2/"]
 RUN dotnet restore "TechChallenge2/TechChallenge2.csproj"
 COPY . .
 WORKDIR "/src/TechChallenge2"
-RUN dotnet build "TechChallenge2/TechChallenge2.csproj" -c Release -o /app/build
+RUN dotnet build "TechChallenge2.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "TechChallenge2/TechChallenge2.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "TechChallenge2.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
