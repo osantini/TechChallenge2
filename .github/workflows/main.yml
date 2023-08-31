@@ -14,7 +14,7 @@ jobs:
         uses: docker/build-push-action@v4.1.1
         with: 
           context: ./techchallenge2
-          file: ./techchallenge2/Dockerfile
+          file: ./TechChallenge2/Dockerfile
           push: true
           tags: |
             techChallenge2/postech:v1
