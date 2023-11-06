@@ -1,6 +1,6 @@
 ﻿namespace TechChallenge2.Models
 {
-    public class Noticia
+    public class NoticiaModel
     {
         public int Id { get; set; }
         public string Titulo { get; set; }

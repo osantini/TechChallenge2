@@ -10,15 +10,14 @@ namespace TechChallenge2.Controllers
     public class NoticiasController : ControllerBase
     {
         [HttpGet]
-        public IActionResult BuscaNoticias()
+        public IActionResult BuscaNoticias(string token)
         {
-            var token = TokenManager.GenerateToken();
             var tokenName = TokenManager.ValidateToken(token);
 
             if (tokenName == "postech")
             {
-                Noticia result = new Noticia();
-                List<Noticia> resultFinal = new List<Noticia>();
+                NoticiaModel result = new NoticiaModel();
+                List<NoticiaModel> resultFinal = new List<NoticiaModel>();
 
                 SqlConnection connection = Connection.OpenConnectionSql();
                 connection.Open();
@@ -30,7 +29,7 @@ namespace TechChallenge2.Controllers
 
                 while (reader.Read())
                 {
-                    resultFinal.Add(new Noticia()
+                    resultFinal.Add(new NoticiaModel()
                     {
                         Id = Convert.ToInt32(reader["Id"]),
                         Titulo = reader["Titulo"].ToString(),
@@ -45,6 +44,67 @@ namespace TechChallenge2.Controllers
                 return Ok(resultFinal);
             }
             return Ok("Token Inválido");
+        }
+    }
+
+    [Route("api/gerar-token")]
+    [ApiController]
+
+    public class TokenController : ControllerBase
+    {
+        [HttpGet]
+        public string GerarToken()
+        {
+            try
+            {
+                var token = TokenManager.GenerateToken();
+                bool tokenSalvo = TokenController.SalvarToken(token);
+
+                return token;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        public static bool SalvarToken(string token)
+        {
+            try
+            {
+                TokenModel tokenResult = new TokenModel();
+                SqlConnection connection = Connection.OpenConnectionSql();
+                connection.Open();
+
+                string insertQuery = "INSERT INTO Token (DataCriacao, DataValidade, Codigo, Token) VALUES (@DataCriacao, @DataValidade, @Codigo, @Token)";
+
+                using (SqlCommand cmd = new SqlCommand(insertQuery, connection))
+                {
+                    cmd.Parameters.AddWithValue("@DataCriacao", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@DataValidade", DateTime.Now.AddHours(1));
+                    cmd.Parameters.AddWithValue("@Codigo", "postech");
+                    cmd.Parameters.AddWithValue("@Token", token);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        Console.WriteLine("Inserção realizada com sucesso.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Falha ao inserir os dados.");
+                    }
+                }
+
+
+                return true;
+
+            }
+            catch(Exception)
+            {
+                return false;
+            }
         }
     }
 }
