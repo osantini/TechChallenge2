@@ -26,4 +26,9 @@ jobs:
           tags: |
             techchallenge2/postech:v1
             techchallenge2/postech:latest
+
+      - name: Executar testes
+        run: |
+          # Execute os testes unitários usando o NUnit
+          dotnet test TechChallenge2.Tests/TechChallenge2.Tests.csproj
     
