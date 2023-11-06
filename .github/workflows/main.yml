@@ -11,11 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3.6.0
 
-      #- name: Autenticação Azure
-        #uses: Azure/login@v1.4.6
-        #with: 
-          #username: ${{secrets.DOCKERHUB_USER}}
-          #password: ${{secrets.DOCKERHUB_PWD}}
+      - name: Autenticação Azure
+        uses: Azure/login@v1.4.6
+        with: 
+          username: ${{secrets.DOCKERHUB_USER}}
+          password: ${{secrets.DOCKERHUB_PWD}}
       
       - name: Construção imagem Docker
         uses: docker/build-push-action@v4.1.1
