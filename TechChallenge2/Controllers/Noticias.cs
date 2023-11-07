@@ -2,9 +2,13 @@
 using System.Data.SqlClient;
 using TechChallenge2.Models;
 using TechChallenge2.Services;
+using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.Extensibility;
 
 namespace TechChallenge2.Controllers
 {
+
+
     [Route("api/busca-noticias")]
     [ApiController]
     public class NoticiasController : ControllerBase
