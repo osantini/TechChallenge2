@@ -26,4 +26,22 @@ jobs:
           tags: |
             techchallenge2/postech:v1
             techchallenge2/postech:latest
+
+      - name: Executar testes
+        run: |
+          # Execute os testes unitários usando o XUnit
+          dotnet test TechChallenge2.Tests/TechChallenge2.Tests.csproj
+
+      - name: Set up Docker
+        run: |
+         docker --version
+         docker build -t my-api-image .
+         working-directory: TechChallenge2  # Substitua pelo diretório do seu projeto
+
+      - name: Run unit tests in Docker
+        run: |
+         docker run my-api-image dotnet test
+         working-directory: TechChallenge2.Tests
+
+      
     
